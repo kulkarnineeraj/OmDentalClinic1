@@ -67,6 +67,9 @@ public class PatientInfo {
     @Column(name = "reports")
     private byte[] patientReports;
     
+	@Column(name = "s3Objectkey")
+	private String reportlocation;
+    
 	@Column(name = "info_timestamp")
 	private Date timestamp;
 	 
@@ -90,8 +93,8 @@ public class PatientInfo {
 
 	public PatientInfo(int patientnumber, String firstname, String middlename, String lastname, int patientage,
 			String patientgender, Date patientregdate, long patientmobile1, long patientmobile2,
-			String patientmedicalhistory, String cashiername, byte[] patientReports, Date timestamp,
-			List<PatientProcedure> patientprocedure) {
+			String patientmedicalhistory, String cashiername, byte[] patientReports, String reportlocation,
+			Date timestamp, List<PatientProcedure> patientprocedure) {
 		super();
 		this.patientnumber = patientnumber;
 		this.firstname = firstname;
@@ -105,6 +108,7 @@ public class PatientInfo {
 		this.patientmedicalhistory = patientmedicalhistory;
 		this.cashiername = cashiername;
 		this.patientReports = patientReports;
+		this.reportlocation = reportlocation;
 		this.timestamp = timestamp;
 		this.patientprocedure = patientprocedure;
 	}
@@ -205,6 +209,14 @@ public class PatientInfo {
 		this.patientReports = patientReports;
 	}
 
+	public String getReportlocation() {
+		return reportlocation;
+	}
+
+	public void setReportlocation(String reportlocation) {
+		this.reportlocation = reportlocation;
+	}
+
 	public Date getTimestamp() {
 		return timestamp;
 	}
@@ -227,17 +239,19 @@ public class PatientInfo {
 				+ ", lastname=" + lastname + ", patientage=" + patientage + ", patientgender=" + patientgender
 				+ ", patientregdate=" + patientregdate + ", patientmobile1=" + patientmobile1 + ", patientmobile2="
 				+ patientmobile2 + ", patientmedicalhistory=" + patientmedicalhistory + ", cashiername=" + cashiername
-				+ ", patientReports=" + Arrays.toString(patientReports) + ", timestamp=" + timestamp
-				+ ", patientprocedure=" + patientprocedure + ", getPatientnumber()=" + getPatientnumber()
-				+ ", getFirstname()=" + getFirstname() + ", getMiddlename()=" + getMiddlename() + ", getLastname()="
-				+ getLastname() + ", getPatientage()=" + getPatientage() + ", getPatientgender()=" + getPatientgender()
-				+ ", getPatientregdate()=" + getPatientregdate() + ", getPatientmobile1()=" + getPatientmobile1()
-				+ ", getPatientmobile2()=" + getPatientmobile2() + ", getPatientmedicalhistory()="
+				+ ", patientReports=" + Arrays.toString(patientReports) + ", reportlocation=" + reportlocation
+				+ ", timestamp=" + timestamp + ", patientprocedure=" + patientprocedure + ", getPatientnumber()="
+				+ getPatientnumber() + ", getFirstname()=" + getFirstname() + ", getMiddlename()=" + getMiddlename()
+				+ ", getLastname()=" + getLastname() + ", getPatientage()=" + getPatientage() + ", getPatientgender()="
+				+ getPatientgender() + ", getPatientregdate()=" + getPatientregdate() + ", getPatientmobile1()="
+				+ getPatientmobile1() + ", getPatientmobile2()=" + getPatientmobile2() + ", getPatientmedicalhistory()="
 				+ getPatientmedicalhistory() + ", getCashiername()=" + getCashiername() + ", getPatientReports()="
-				+ Arrays.toString(getPatientReports()) + ", getTimestamp()=" + getTimestamp()
-				+ ", getPatientprocedure()=" + getPatientprocedure() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+				+ Arrays.toString(getPatientReports()) + ", getReportlocation()=" + getReportlocation()
+				+ ", getTimestamp()=" + getTimestamp() + ", getPatientprocedure()=" + getPatientprocedure()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
+
 
 
 

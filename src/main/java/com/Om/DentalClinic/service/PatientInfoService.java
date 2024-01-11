@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 import com.Om.DentalClinic.model.PatientInfo;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 public interface PatientInfoService {
 
     public List<PatientInfo> getAllPatientInfo();
@@ -33,6 +35,8 @@ public interface PatientInfoService {
 	public ByteArrayOutputStream exportPatientsAndProceduresToExcel() throws IOException;
 	
 	public byte[] getMedicalReportById(int patientId) throws IOException;
+	
+	public void downloadReportFromS3(String reportLocation, HttpServletResponse response);
 	
 }
 

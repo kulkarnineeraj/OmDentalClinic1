@@ -1055,23 +1055,35 @@ public class MainController {
 	   
 //--Sitting Controller Ends-------------------------------------------------------------------------------------------------------------------------------------------------	
 
-		   @GetMapping("/download/{patientId}")
-		    public ResponseEntity<byte[]> downloadMedicalReport(@PathVariable int patientId) {
-		        try {
-		            byte[] medicalReportContent = patientInfoService.getMedicalReportById(patientId);
+//		   @GetMapping("/download/{patientId}")
+//		    public ResponseEntity<byte[]> downloadMedicalReport(@PathVariable int patientId) {
+//		        try {
+//		            byte[] medicalReportContent = patientInfoService.getMedicalReportById(patientId);
+//
+//		            HttpHeaders headers = new HttpHeaders();
+//		            headers.setContentType(MediaType.APPLICATION_PDF);
+//		            headers.setContentDispositionFormData("inline", "medical_report.pdf");
+//
+//		            return ResponseEntity.ok()
+//		                .headers(headers)
+//		                .body(medicalReportContent);
+//		        } catch (IOException e) {
+//		            // Handle the case where the medical report is not found
+//		            return ResponseEntity.notFound().build();
+//		        }
+//		    }
+					 
 
-		            HttpHeaders headers = new HttpHeaders();
-		            headers.setContentType(MediaType.APPLICATION_PDF);
-		            headers.setContentDispositionFormData("inline", "medical_report.pdf");
+					 @GetMapping("/download/{patientId}")
+					 public void downloadReport(@PathVariable int patientId, HttpServletResponse response) {
+					     PatientInfo patientinfo=patientInfoService.getPatientInfoById(patientId);
+					     String reportLocation = patientinfo.getReportlocation();	     
+					     if (reportLocation != null) {
+					         patientInfoService.downloadReportFromS3(reportLocation, response);
+					     }
+					 }
+					 
 
-		            return ResponseEntity.ok()
-		                .headers(headers)
-		                .body(medicalReportContent);
-		        } catch (IOException e) {
-		            // Handle the case where the medical report is not found
-		            return ResponseEntity.notFound().build();
-		        }
-		    }
 		   
 
 }

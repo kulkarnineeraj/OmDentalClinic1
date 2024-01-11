@@ -311,17 +311,18 @@
     </div>
 
 
-    <!--    <div class="row mb-3">
-    <label class="col-sm-2 col-form-label">Medical Report</label>
+<!-- Medical Report Section -->
+<div class="row mb-3">
+    <label for="inputText" class="col-sm-2 col-form-label">Medical Report</label>
     <div class="col-sm-10">
-        <th:block th:if="${patientinfo.patientReports ne null}">
-            <a th:href="${'/view/' + patientinfo.patientnumber}" target="_blank" class="btn btn-primary">View Medical Report</a>
-        </th:block>
-        <p th:if="${patientinfo.patientReports eq null}">No medical report available.</p>
+        <div th:if="${patientinfo.reportlocation ne null}">
+            <p>Medical Report: <span th:text="${patientinfo.reportlocation}"></span></p>
+            <a th:href="${'/download/' + patientinfo.patientnumber}" class="btn btn-primary" target="_blank">Download</a>
+        </div>
+        <p th:if="${patientinfo.reportlocation eq null}">No medical report available.</p>
     </div>
 </div>
 
- -->
 
 
     <!-- Hidden field for patient ID -->
