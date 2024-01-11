@@ -36,7 +36,7 @@ public interface PatientInfoService {
 	
 	public byte[] getMedicalReportById(int patientId) throws IOException;
 	
-	public void downloadReportFromS3(String reportLocation, HttpServletResponse response);
+//	public void downloadReportFromS3(String reportLocation, HttpServletResponse response);
 	
 }
 

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableJpaRepositories(basePackages = "com.Om.DentalClinic.repository")
 @EntityScan(basePackages = "com.Om.DentalClinic.model")
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.Om.DentalClinic", "com.OmDentalClinic.config"})
+//@ComponentScan(basePackages = {"com.Om.DentalClinic", "com.OmDentalClinic.config"})
 public class OmDentalClinicApplication extends SpringBootServletInitializer {
 
 	@Override

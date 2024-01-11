@@ -38,10 +38,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.ByteArrayOutputStream;
-
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+//
+//import org.springframework.http.HttpHeaders;
+//import org.springframework.http.MediaType;
+//import org.springframework.http.ResponseEntity;
 
 
 @Controller
@@ -1074,15 +1074,15 @@ public class MainController {
 //		    }
 					 
 
-					 @GetMapping("/download/{patientId}")
-					 public void downloadReport(@PathVariable int patientId, HttpServletResponse response) {
-					     PatientInfo patientinfo=patientInfoService.getPatientInfoById(patientId);
-					     String reportLocation = patientinfo.getReportlocation();	     
-					     if (reportLocation != null) {
-					         patientInfoService.downloadReportFromS3(reportLocation, response);
-					     }
-					 }
-					 
+//					 @GetMapping("/download/{patientId}")
+//					 public void downloadReport(@PathVariable int patientId, HttpServletResponse response) {
+//					     PatientInfo patientinfo=patientInfoService.getPatientInfoById(patientId);
+//					     String reportLocation = patientinfo.getReportlocation();	     
+//					     if (reportLocation != null) {
+//					         patientInfoService.downloadReportFromS3(reportLocation, response);
+//					     }
+//					 }
+//					 
 
 		   
 

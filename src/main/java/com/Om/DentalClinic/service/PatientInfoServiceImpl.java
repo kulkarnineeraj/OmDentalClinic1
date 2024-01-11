@@ -1,8 +1,8 @@
 package com.Om.DentalClinic.service;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+//import java.io.InputStream;
+//import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -14,10 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayOutputStream;
 //import java.io.IOException;
 //import java.util.List;
-import java.io.File;
-import java.io.FileOutputStream;
-
-import org.apache.el.stream.Optional;
+//import java.io.File;
+//import java.io.FileOutputStream;
+//
+//import org.apache.el.stream.Optional;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -27,21 +27,20 @@ import com.Om.DentalClinic.model.PatientProcedure;
 import com.Om.DentalClinic.model.Sittings;
 import com.Om.DentalClinic.repository.PatientInfoRepository;
 import com.Om.DentalClinic.repository.SittingRepository;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-
-import jakarta.servlet.http.HttpServletResponse;
-
+//import com.amazonaws.services.s3.AmazonS3;
+//import com.amazonaws.services.s3.model.GetObjectRequest;
+//import com.amazonaws.services.s3.model.PutObjectRequest;
+//import jakarta.servlet.http.HttpServletResponse;
+//
 
 @Service
 public class PatientInfoServiceImpl implements PatientInfoService {
 	
-	@Value("${applicaton.bucket.name}")
-	private String bucketName;
-	
-	@Autowired
-	private AmazonS3 s3Client;
+//	@Value("${applicaton.bucket.name}")
+//	private String bucketName;
+//	
+//	@Autowired
+//	private AmazonS3 s3Client;
 	
 	@Autowired
 	private PatientInfoRepository patientInfoRepository;
@@ -80,62 +79,62 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 	        if (patientReports != null && !patientReports.isEmpty()) {
 	            // Set the file content in the patientInfo object
 	        	//patientInfo.setPatientReports(patientReports.getBytes());
-
-	            	String timestamp = String.valueOf(System.currentTimeMillis());
-	            	File fileObj = convertMultiPartFileToFile(patientReports);
-	            	String filename = timestamp+"_"+patientReports.getOriginalFilename();
-	            	patientInfo.setReportlocation(filename);
-	            	s3Client.putObject(new PutObjectRequest(bucketName,filename,fileObj));
+//
+//	            	String timestamp = String.valueOf(System.currentTimeMillis());
+//	            	File fileObj = convertMultiPartFileToFile(patientReports);
+//	            	String filename = timestamp+"_"+patientReports.getOriginalFilename();
+//	            	patientInfo.setReportlocation(filename);
+//	            	s3Client.putObject(new PutObjectRequest(bucketName,filename,fileObj));
 	        }
 
 			patientInfoRepository.save(patientInfo);
 		}
 
  
-	private File convertMultiPartFileToFile(MultipartFile file) {
-	    File convertedFile = new File(file.getOriginalFilename());
-	    try (FileOutputStream fos = new FileOutputStream(convertedFile)) { // Correct typo
-	        fos.write(file.getBytes());
-	    } catch (IOException e) {
-	    	System.err.println("Error converting multipartfile to file: " + e.getMessage());
-	    }
-	    return convertedFile;
-	}
-	
-
-	public void downloadReportFromS3(String reportLocation, HttpServletResponse response) {
-	    try {
-	        // Check if the object exists in S3
-	        boolean doesObjectExist = s3Client.doesObjectExist(bucketName, reportLocation);
-
-	        if (!doesObjectExist) {
-	            // Set appropriate response status and message
-	            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-	            response.getWriter().println("File not found on S3.");
-	            return; // Exit the method
-	        }
-
-	        // If the file exists, proceed with downloading
-	        InputStream inputStream = s3Client.getObject(new GetObjectRequest(bucketName, reportLocation)).getObjectContent();
-
-	        // Set the content type and headers for the response
-	        response.setContentType("application/octet-stream");
-	        response.setHeader("Content-Disposition", "attachment; filename=" + reportLocation);
-
-	        // Copy the input stream to the response output stream
-	        OutputStream outputStream = response.getOutputStream();
-	        byte[] buffer = new byte[1024];
-	        int bytesRead;
-	        while ((bytesRead = inputStream.read(buffer)) != -1) {
-	            outputStream.write(buffer, 0, bytesRead);
-	        }
-	        inputStream.close();
-	        outputStream.close();
-	    } catch (IOException e) {
-	        // Handle other IOExceptions or log them as needed
-	        System.err.println("Error downloading report from S3: " + e.getMessage());
-	    }
-	}
+//	private File convertMultiPartFileToFile(MultipartFile file) {
+//	    File convertedFile = new File(file.getOriginalFilename());
+//	    try (FileOutputStream fos = new FileOutputStream(convertedFile)) { // Correct typo
+//	        fos.write(file.getBytes());
+//	    } catch (IOException e) {
+//	    	System.err.println("Error converting multipartfile to file: " + e.getMessage());
+//	    }
+//	    return convertedFile;
+//	}
+//	
+//
+//	public void downloadReportFromS3(String reportLocation, HttpServletResponse response) {
+//	    try {
+//	        // Check if the object exists in S3
+//	        boolean doesObjectExist = s3Client.doesObjectExist(bucketName, reportLocation);
+//
+//	        if (!doesObjectExist) {
+//	            // Set appropriate response status and message
+//	            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+//	            response.getWriter().println("File not found on S3.");
+//	            return; // Exit the method
+//	        }
+//
+//	        // If the file exists, proceed with downloading
+//	        InputStream inputStream = s3Client.getObject(new GetObjectRequest(bucketName, reportLocation)).getObjectContent();
+//
+//	        // Set the content type and headers for the response
+//	        response.setContentType("application/octet-stream");
+//	        response.setHeader("Content-Disposition", "attachment; filename=" + reportLocation);
+//
+//	        // Copy the input stream to the response output stream
+//	        OutputStream outputStream = response.getOutputStream();
+//	        byte[] buffer = new byte[1024];
+//	        int bytesRead;
+//	        while ((bytesRead = inputStream.read(buffer)) != -1) {
+//	            outputStream.write(buffer, 0, bytesRead);
+//	        }
+//	        inputStream.close();
+//	        outputStream.close();
+//	    } catch (IOException e) {
+//	        // Handle other IOExceptions or log them as needed
+//	        System.err.println("Error downloading report from S3: " + e.getMessage());
+//	    }
+//	}
 
 
 	public void deletePatientInfoById(int id) {
