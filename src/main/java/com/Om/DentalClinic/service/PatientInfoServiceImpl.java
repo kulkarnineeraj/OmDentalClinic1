@@ -102,28 +102,40 @@ public class PatientInfoServiceImpl implements PatientInfoService {
 	    return convertedFile;
 	}
 	
-	
-    public void downloadReportFromS3(String reportLocation, HttpServletResponse response) {
-        try {
-            InputStream inputStream = s3Client.getObject(new GetObjectRequest(bucketName, reportLocation)).getObjectContent();
 
-            // Set the content type and headers for the response
-            response.setContentType("application/octet-stream");
-            response.setHeader("Content-Disposition", "attachment; filename=" + reportLocation);
+	public void downloadReportFromS3(String reportLocation, HttpServletResponse response) {
+	    try {
+	        // Check if the object exists in S3
+	        boolean doesObjectExist = s3Client.doesObjectExist(bucketName, reportLocation);
 
-            // Copy the input stream to the response output stream
-            OutputStream outputStream = response.getOutputStream();
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-            inputStream.close();
-            outputStream.close();
-        } catch (IOException e) {
-            System.err.println("Error downloading report from S3: " + e.getMessage());
-        }
-    }
+	        if (!doesObjectExist) {
+	            // Set appropriate response status and message
+	            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+	            response.getWriter().println("File not found on S3.");
+	            return; // Exit the method
+	        }
+
+	        // If the file exists, proceed with downloading
+	        InputStream inputStream = s3Client.getObject(new GetObjectRequest(bucketName, reportLocation)).getObjectContent();
+
+	        // Set the content type and headers for the response
+	        response.setContentType("application/octet-stream");
+	        response.setHeader("Content-Disposition", "attachment; filename=" + reportLocation);
+
+	        // Copy the input stream to the response output stream
+	        OutputStream outputStream = response.getOutputStream();
+	        byte[] buffer = new byte[1024];
+	        int bytesRead;
+	        while ((bytesRead = inputStream.read(buffer)) != -1) {
+	            outputStream.write(buffer, 0, bytesRead);
+	        }
+	        inputStream.close();
+	        outputStream.close();
+	    } catch (IOException e) {
+	        // Handle other IOExceptions or log them as needed
+	        System.err.println("Error downloading report from S3: " + e.getMessage());
+	    }
+	}
 
 
 	public void deletePatientInfoById(int id) {
